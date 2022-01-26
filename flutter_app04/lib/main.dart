@@ -41,8 +41,8 @@ class RootPageState extends State<RootPage> {
       bottom: 0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
+        child: ListView(
+          children: <Widget>[
             Container(
               margin: EdgeInsets.only(left: 20, right: 20, top: 60),
             ),
@@ -81,15 +81,21 @@ class RootPageState extends State<RootPage> {
         left: 36.0,
         top: 40.0,
       ),
-      child: Text(
-        '登录神奇界面',
-        style: TextStyle(
-          fontSize: 26.0,
-          color: Colors.black87,
+      child: buildTitleText(),
+    );
+  }
+
+  buildTitleText() {
+    return Row(
+      children: [
+        Text(
+          '登录神奇课堂',
+          style: TextStyle(
+            fontSize: 26.0,
+            color: Colors.black,
+          ),
         ),
-      ),
-      width: 339.0,
-      height: 41.0,
+      ],
     );
   }
 
@@ -142,7 +148,30 @@ class RootPageState extends State<RootPage> {
   }
 
   buildCode() {
-    return Row(
+    return Container(
+      margin: EdgeInsets.only(left: 16.0, right: 30.0),
+      child: Row(
+        children: [
+          Container(
+            child: Row(
+              children: [
+                buildVerCode(),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              children: [
+                buildRigister(),
+              ],
+            ),
+          ),
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      ),
+    );
+  }
+  /* return Row(
       children: [
         Container(
           margin: EdgeInsets.only(left: 16.0, right: 30.0),
@@ -150,17 +179,29 @@ class RootPageState extends State<RootPage> {
           height: 17.0,
           child: Row(
             children: <Widget>[
-              buildVerCode(),
+              Container(
+                child: Row(
+                  children:<Widget>[
+                    buildVerCode(),
+                  ]
+                ),
+              ),
               SizedBox(
                 width: 65.0,
               ),
-              buildRigister(),
+              Container(
+                child: Row(
+                  children: [
+                    buildRigister(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ],
     );
-  }
+  }*/
 
   buildVerCode() {
     return Container(
@@ -187,6 +228,7 @@ class RootPageState extends State<RootPage> {
     return Container(
       width: 80.0,
       height: 17.0,
+      alignment: Alignment.centerRight,
       child: Align(
         child: FlatButton(
           child: Text(
@@ -202,21 +244,48 @@ class RootPageState extends State<RootPage> {
   }
 
   buildLoginButton() {
+    return InkWell(
+      onTap: () {},
+      child: Stack(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            width: MediaQuery.of(context).size.width,
+            height: 45.0,
+            margin: EdgeInsets.only(
+              left: 30,
+              right: 30.0,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.green[200],
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              //border: Border.all(color:normalColor)
+            ),
+            child: Text(
+              '登录',
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /*buildLoginButton() {
     return Align(
       child: SizedBox(
-        height: 44.0,
-        width: 341.0,
         child: RaisedButton(
           child: Text(
             '登录',
             style: TextStyle(fontSize: 20.0, color: Colors.white),
           ),
-          color: Colors.green[200],
+          
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-              ///只有输入的内容符合要求通过才会到达此处
               _formKey.currentState!.save();
-              //TODO 执行登录方法
               print('user:$_phone , assword:$_password');
             }
           },
@@ -224,7 +293,7 @@ class RootPageState extends State<RootPage> {
         ),
       ),
     );
-  }
+  }*/
 
   buildOtherLoginText() {
     return Align(
