@@ -18,7 +18,9 @@ class RootPageState extends State<RootPage> {
   final _formKey = GlobalKey<FormState>();
   String? _phone, _password;
   bool _isObscure = true;
-
+  List _loginMethod = [
+    {'title': 'weixin', 'icon': 'GroovinMaterialIcons.weixin'}
+  ];
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -40,9 +42,9 @@ class RootPageState extends State<RootPage> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 40.0,
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, top: 60),
             ),
             buildTitle(),
             SizedBox(
@@ -60,11 +62,13 @@ class RootPageState extends State<RootPage> {
             SizedBox(
               height: 30,
             ),
-            buildLoginButton(context),
+            buildLoginButton(),
             SizedBox(
-              height: 20.0,
+              height: 150.0,
             ),
             buildOtherLoginText(),
+            SizedBox(height: 10.0),
+            buildOtherLoginImage(),
           ],
         ),
       ),
@@ -74,17 +78,18 @@ class RootPageState extends State<RootPage> {
   buildTitle() {
     return Container(
       margin: EdgeInsets.only(
-        left: 30.0,
-        right: 30.0,
+        left: 36.0,
+        top: 40.0,
       ),
       child: Text(
         '登录神奇界面',
-        textAlign: TextAlign.left,
         style: TextStyle(
-          fontSize: 30.0,
-          color: Colors.black,
+          fontSize: 26.0,
+          color: Colors.black87,
         ),
       ),
+      width: 339.0,
+      height: 41.0,
     );
   }
 
@@ -104,7 +109,7 @@ class RootPageState extends State<RootPage> {
         Expanded(
           child: TextField(
             decoration: InputDecoration(
-                hintText: '请输入手机号', hintStyle: TextStyle(fontSize: 20)),
+                hintText: '请输入手机号', hintStyle: TextStyle(fontSize: 16)),
           ),
         )
       ],
@@ -128,7 +133,7 @@ class RootPageState extends State<RootPage> {
           child: TextField(
             decoration: InputDecoration(
               hintText: '请输入密码',
-              hintStyle: TextStyle(fontSize: 20),
+              hintStyle: TextStyle(fontSize: 16),
             ),
           ),
         )
@@ -140,27 +145,34 @@ class RootPageState extends State<RootPage> {
     return Row(
       children: [
         Container(
-          margin: EdgeInsets.only(
-            left: 30.0,
-            right: 30.0,
+          margin: EdgeInsets.only(left: 16.0, right: 30.0),
+          width: 307.0,
+          height: 17.0,
+          child: Row(
+            children: <Widget>[
+              buildVerCode(),
+              SizedBox(
+                width: 65.0,
+              ),
+              buildRigister(),
+            ],
           ),
         ),
-        buildVerCode(),
-        buildRigister(),
       ],
     );
   }
 
   buildVerCode() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+    return Container(
+      width: 150.0,
+      height: 17.0,
       child: Align(
         alignment: Alignment.centerLeft,
         child: FlatButton(
           child: Text(
-            '验证码登录',
+            '输入验证码登录 >',
             style: TextStyle(
-              fontSize: 20.0,
+              fontSize: 12.0,
             ),
           ),
           onPressed: () {
@@ -172,14 +184,14 @@ class RootPageState extends State<RootPage> {
   }
 
   buildRigister() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+    return Container(
+      width: 80.0,
+      height: 17.0,
       child: Align(
-        alignment: Alignment.centerRight,
         child: FlatButton(
           child: Text(
             '忘记密码',
-            style: TextStyle(fontSize: 20.0, color: Colors.green),
+            style: TextStyle(fontSize: 12.0, color: Colors.green),
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -189,7 +201,7 @@ class RootPageState extends State<RootPage> {
     );
   }
 
-  Align buildLoginButton(BuildContext context) {
+  buildLoginButton() {
     return Align(
       child: SizedBox(
         height: 44.0,
@@ -197,12 +209,14 @@ class RootPageState extends State<RootPage> {
         child: RaisedButton(
           child: Text(
             '登录',
-            style: TextStyle(fontSize: 20.0),
+            style: TextStyle(fontSize: 20.0, color: Colors.white),
           ),
-          color: Colors.green,
+          color: Colors.green[200],
           onPressed: () {
             if (_formKey.currentState!.validate()) {
+              ///只有输入的内容符合要求通过才会到达此处
               _formKey.currentState!.save();
+              //TODO 执行登录方法
               print('user:$_phone , assword:$_password');
             }
           },
@@ -211,13 +225,25 @@ class RootPageState extends State<RootPage> {
       ),
     );
   }
-}
 
-Align buildOtherLoginText() {
-  return Align(
+  buildOtherLoginText() {
+    return Align(
       alignment: Alignment.center,
       child: Text(
-        '第三方账号登录',
+        '其他账号登录',
         style: TextStyle(color: Colors.grey, fontSize: 14.0),
-      ));
+      ),
+    );
+  }
+
+  buildOtherLoginImage() {
+    return Container(
+      child: Image.asset('images/weixin.jpg'),
+      width: 38.0,
+      height: 38.0,
+    );
+  }
 }
+
+        
+       // Image.asset('assets/images/3.0x/weixin.jpg'),
